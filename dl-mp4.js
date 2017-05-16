@@ -7,14 +7,24 @@ const url = 'https://www.youtube.com/watch?v=' + key;
 const path = './musics/'
 
 const options = {
-    quality: 'highest', // 'highest', 'lowest'
-    downloadURL: true,
+    //quality: 'lowest', // 'highest', 'lowest'
+    //downloadURL: true,
     filter: function (format) { return format.container === 'mp4'; }
 };
 
 ytdl.getInfo(url, options, function (err, info) {
     const filename = info.title.replace(/[|&;$%@"<>()+,]/g, '');
-    ytdl(url, options)
-        .pipe(fs.createWriteStream(path + filename + '.mp4'));
-    console.log('finished');
+    const stream = ytdl(url, options);
+
+    stream.pipe(fs.createWriteStream(path + filename + '.mp4'));
+
+    stream.on('progress', (chunk, downloaded, downloadLength) => {
+        process.stdout.cursorTo(0);
+        process.stdout.clearLine(1);
+        process.stdout.write(downloaded + ' of ' + downloadLength);
+
+        if(downloaded === downloadLength) {
+            console.log(' finished');
+        }
+    });
 });
