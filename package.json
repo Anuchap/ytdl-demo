@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "download mp4 audio only from youtube",
   "dependencies": {
+    "fluent-ffmpeg": "^2.1.2",
     "ytdl-core": "^0.14.0"
   }
 }
