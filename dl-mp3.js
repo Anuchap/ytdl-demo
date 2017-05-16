@@ -13,13 +13,17 @@ const options = {
     filter: 'audioonly'
 };
 
-function createSong(path, title, stream, bitrate) {
+function createMp3(path, filename, stream, bitrate) {
     new ffmpeg(stream)
         .audioBitrate(bitrate)
-        .saveToFile(path + title + '.mp3')
+        .saveToFile(path + filename + '.mp3')
         .on('error', (err) => console.log(err))
         .on('end', function () {
-            console.log('finished');
+            console.log(' > finished');
+        }).on('progress', (progress) => {
+            // process.stdout.cursorTo(0);
+            // process.stdout.clearLine(1);
+            // process.stdout.write('Converting... ' + progress.timemark + ' ');
         })
 }
 
@@ -29,8 +33,15 @@ stream.on('info', (info, format) => {
         if (err) {
             fs.mkdirSync(path);
         }
-        createSong(path, info.title, stream, 192);
+        const filename = info.title.replace(/[|&;$%@"<>()+?,]/g, '');
+        createMp3(path, filename, stream, 192);
     });
+});
+
+stream.on('progress', (chunk, downloaded, downloadLength) => {
+    process.stdout.cursorTo(0);
+    process.stdout.clearLine(1);
+    process.stdout.write(downloaded + ' of ' + downloadLength);
 });
 
 stream.on('error', (err) => {
