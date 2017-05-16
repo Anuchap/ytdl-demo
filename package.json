@@ -1,0 +1,8 @@
+{
+  "name": "ytdl-demo",
+  "version": "1.0.0",
+  "description": "download mp4 audio only from youtube",
+  "dependencies": {
+    "ytdl-core": "^0.14.0"
+  }
+}
