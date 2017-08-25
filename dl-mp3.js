@@ -10,7 +10,7 @@ const path = './musics/';
 const options = {
     quality: 'highest', // 'highest', 'lowest'
     downloadURL: true,
-    filter: 'audioonly'
+    filter: 'audioonly' // anucha
 };
 
 function createMp3(path, filename, stream, bitrate) {
