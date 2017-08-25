@@ -5,7 +5,7 @@ ffmpeg = require('fluent-ffmpeg');
 
 const key = process.argv[2];
 const url = 'https://www.youtube.com/watch?v=' + key;
-const path = './musics/'
+const path = './musics/';
 
 const options = {
     quality: 'highest', // 'highest', 'lowest'
